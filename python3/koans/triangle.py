@@ -17,12 +17,19 @@
 #   about_triangle_project_2.py
 #
 def triangle(a, b, c):
+    checkValidity(a, b, c)
     if a == b == c:
         return "equilateral"
     elif a == b or a == c or b == c:
         return "isosceles"
     else:
         return "scalene"
+
+def checkValidity(a, b, c):
+    if min(a, b, c) <= 0:
+        raise TriangleError("All sides must be >= 0")
+    elif a + b <= c or a + c <= b or b + c <= a:
+        raise TriangleError("Not a triangle")
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError(Exception):
