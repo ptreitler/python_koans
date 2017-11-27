@@ -33,8 +33,38 @@ from runner.koan import *
 # Your goal is to write the score method.
 
 def score(dice):
-    # You need to write this method
-    pass
+    return checkForTripleDiePoints(dice) + checkForSingleDiePoints(dice)
+
+def checkForTripleOne(dice):
+    ones = [1, 1, 1]
+    if ones in dice:
+        for one in ones:
+            dice.remove(one)
+        return 1000
+    else:
+        return 0
+
+def checkForTripleDiePoints(dice):
+    score = 0
+    diceToCheck = [1, 2, 3, 4, 5, 6]
+    tripleDiceScores = [1000, 200, 300, 400, 500, 600]
+
+    for i in range(len(diceToCheck)):
+        dieToCheck = diceToCheck[i]
+        if dice.count(dieToCheck) >= 3:
+            score += tripleDiceScores[i]
+            for j in range(3):
+                dice.remove(dieToCheck)
+    return score
+
+def checkForSingleDiePoints(dice):
+    score = 0
+    for die in dice:
+        if die == 1:
+            score += 100
+        elif die == 5:
+            score += 50
+    return score
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
